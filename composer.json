@@ -1,0 +1,26 @@
+{
+	"name": "robotusers/cakephp-chunk",
+	"description": "Robotusers CakePHP Chunk plugin",
+	"homepage": "https://github.com/robotusers/cakephp-chunk",
+	"type": "cakephp-plugin",
+	"require": {
+		"php": ">=5.6",
+		"cakephp/orm": "^3.4"
+	},
+	"require-dev": {
+		"cakephp/cakephp": "~3.4.0",
+		"cakephp/cakephp-codesniffer": "^3.0",
+		"phpunit/phpunit": "^5.6|^6"
+	},
+	"autoload": {
+		"psr-4": {
+			"Robotusers\\Chunk\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Cake\\Test\\": "vendor/cakephp/cakephp/tests",
+			"Robotusers\\Chunk\\Test\\": "tests"
+		}
+	}
+}
