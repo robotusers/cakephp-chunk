@@ -29,13 +29,12 @@ matrix:
     - env: PHPSTAN=7 DEFAULT=0
 
 before_script:
-  - if [[ $DEFAULT = 1 ]]; then composer install; fi
-  - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp-codesniffer:~2.1; fi
+  - composer install;
   - if [[ $PHPSTAN > 0 ]]; then composer require phpstan/phpstan:^0.7; fi
 
 script:
   - if [[ $DEFAULT = 1 ]]; then vendor/bin/phpunit --coverage-clover=coverage.xml; fi
-  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi
+  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php ./src ./tests; fi
   - if [[ $PHPSTAN > 0 ]]; then vendor/bin/phpstan analyse ./src --level $PHPSTAN; fi
 
 notifications:
