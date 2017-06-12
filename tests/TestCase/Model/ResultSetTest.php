@@ -27,6 +27,7 @@ namespace Robotusers\Chunk\Test\TestCase\Model;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Robotusers\Chunk\Model\ResultSet;
 
 /**
  * Description of ResultsSetTest
@@ -42,24 +43,20 @@ class ResultsSetTest extends TestCase
     public function testSameResults()
     {
         $table = TableRegistry::get('Authors');
-        $table->addBehavior('Robotusers/Chunk.Chunk');
 
         $query = $table->find();
 
         $standardResults = $query->all();
-        $chunkedResults = $table->chunk($query, [
+        $chunkedResults = new ResultSet($query, [
             'size' => 1
         ]);
 
-        $this->assertEquals($standardResults->count(), $chunkedResults->count());
-        $this->assertEquals($standardResults->toArray(),
-            $chunkedResults->toArray());
+        $this->assertEquals($standardResults->toArray(), $chunkedResults->toArray());
     }
 
     public function testMultipleQueriesFired()
     {
         $table = TableRegistry::get('Authors');
-        $table->addBehavior('Robotusers/Chunk.Chunk');
 
         $called = 0;
         $query = $table->find()->formatResults(function ($r) use (&$called) {
@@ -68,12 +65,77 @@ class ResultsSetTest extends TestCase
             return $r;
         });
 
-        $results = $table->chunk($query, [
+        $results = new ResultSet($query, [
             'size' => 1
         ]);
 
         $results->toList();
 
         $this->assertGreaterThanOrEqual($query->count(), $called);
+    }
+
+    public function testLimitAndOffset()
+    {
+        $table = TableRegistry::get('Authors');
+
+        $query = $table->find()->limit(2)->page(2);
+
+        $standardResults = $query->all();
+        $chunkedResults = new ResultSet($query, [
+            'size' => 1
+        ]);
+
+        $this->assertEquals($standardResults->toArray(), $chunkedResults->toArray());
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage You cannot serialize this result set.
+     */
+    public function testSerialize()
+    {
+        $table = TableRegistry::get('Authors');
+        $query = $table->find();
+
+        $chunkedResults = new ResultSet($query);
+        $chunkedResults->serialize();
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage You cannot unserialize this result set.
+     */
+    public function testUnserialize()
+    {
+        $table = TableRegistry::get('Authors');
+        $query = $table->find();
+
+        $chunkedResults = new ResultSet($query);
+        $chunkedResults->unserialize('');
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Count is not supported yet.
+     */
+    public function testCount()
+    {
+        $table = TableRegistry::get('Authors');
+        $query = $table->find();
+
+        $chunkedResults = new ResultSet($query);
+        $chunkedResults->count();
+    }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage You cannot chunk a non-select query.
+     */
+    public function testInvalidQuery()
+    {
+        $table = TableRegistry::get('Authors');
+        $query = $table->query()->insert(['foo' => 'bar']);
+
+        new ResultSet($query);
     }
 }

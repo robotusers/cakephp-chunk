@@ -234,11 +234,7 @@ class ResultSet implements ResultSetInterface
      */
     public function count()
     {
-        if ($this->count === null) {
-            $this->count = $this->query->count();
-        }
-
-        return $this->count;
+        throw new RuntimeException('Count is not supported yet.');
     }
 
     /**
