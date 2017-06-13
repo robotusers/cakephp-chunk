@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-namespace Robotusers\Chunk\Test\TestCase\Model;
+namespace Robotusers\Chunk\Test\TestCase\ORM;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;

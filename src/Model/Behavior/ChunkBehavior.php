@@ -26,6 +26,7 @@ namespace Robotusers\Chunk\Model\Behavior;
 
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
+use Robotusers\Chunk\ORM\Query as ChunkedQuery;
 use Robotusers\Chunk\ORM\ResultSet;
 
 class ChunkBehavior extends Behavior
@@ -41,5 +42,20 @@ class ChunkBehavior extends Behavior
     public function chunk(Query $query, array $config = [])
     {
         return new ResultSet($query, $config);
+    }
+
+    /**
+     * Chunked result finder.
+     *
+     * @param Query $query Query instance.
+     * @param array $config Config.
+     * @return ChunkedQuery
+     */
+    public function findChunked(Query $query, array $config = [])
+    {
+        $chunkedQuery = new ChunkedQuery($query);
+        $chunkedQuery->applyOptions($config);
+
+        return $chunkedQuery;
     }
 }

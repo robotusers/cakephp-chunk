@@ -22,48 +22,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Robotusers\Chunk\Test\TestCase\Model\Behavior;
 
+namespace Robotusers\Chunk\Test\TestCase\ORM;
+
+use Cake\ORM\ResultSet as CoreResultSet;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Robotusers\Chunk\Model\Behavior\ChunkBehavior;
 use Robotusers\Chunk\ORM\Query;
 use Robotusers\Chunk\ORM\ResultSet;
 
 /**
- * Description of ChunkBehaviorTest
+ * Description of QueryTest
  *
  * @author Robert Pustułka <r.pustulka@robotusers.com>
  */
-class ChunkBehaviorTest extends TestCase
+class QueryTest extends TestCase
 {
     public $fixtures = [
         'core.authors'
     ];
 
-    public function testChunk()
+    public function testLoad()
     {
         $table = TableRegistry::get('Authors');
         $query = $table->find();
 
-        $behavior = new ChunkBehavior($table);
-        $chunk = $behavior->chunk($query, [
-            'size' => 100
-        ]);
+        $chunkedQuery = new Query($query);
 
-        $this->assertInstanceOf(ResultSet::class, $chunk);
-        $this->assertEquals(100, $chunk->getConfig('size'));
+        $this->assertSame($query->repository(), $chunkedQuery->repository());
+        $this->assertSame($query->getConnection(), $chunkedQuery->getConnection());
+        $this->assertSame($query->getOptions(), $chunkedQuery->getOptions());
     }
 
-    public function testFinder()
+    public function testApplyOptions()
     {
         $table = TableRegistry::get('Authors');
-        $table->addBehavior('Robotusers/Chunk.Chunk');
-        $query = $table->find('chunked', [
-            'chunkSize' => 1
-        ]);
+        $query = $table->find();
 
-        $this->assertInstanceOf(Query::class, $query);
-        $this->assertEquals(1, $query->getOptions()['chunkSize']);
+        $chunkedQuery = new Query($query);
+        $chunkedQuery->applyOptions(['chunkSize' => 100]);
+        $this->assertEquals(100, $chunkedQuery->getOptions()['chunkSize']);
+    }
+
+    public function testAll()
+    {
+        $table = TableRegistry::get('Authors');
+        $query = $table->find();
+
+        $chunkedQuery = new Query($query);
+        $chunkedQuery->applyOptions(['chunkSize' => 100]);
+        $results = $chunkedQuery->all();
+        $this->assertInstanceOf(ResultSet::class, $results);
+        $this->assertEquals(100, $results->getConfig('size'));
+    }
+
+    public function testDefaultAll()
+    {
+        $table = TableRegistry::get('Authors');
+        $query = $table->find();
+
+        $chunkedQuery = new Query($query);
+        $results = $chunkedQuery->defaultAll();
+        $this->assertInstanceOf(CoreResultSet::class, $results);
     }
 }
