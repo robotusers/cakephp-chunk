@@ -27,7 +27,7 @@ namespace Robotusers\Chunk\Test\TestCase\Model;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Robotusers\Chunk\Model\ResultSet;
+use Robotusers\Chunk\ORM\ResultSet;
 
 /**
  * Description of ResultsSetTest

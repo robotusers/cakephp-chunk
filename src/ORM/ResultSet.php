@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Robotusers\Chunk\Model;
+namespace Robotusers\Chunk\ORM;
 
 use Cake\Collection\CollectionTrait;
 use Cake\Core\InstanceConfigTrait;

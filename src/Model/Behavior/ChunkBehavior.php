@@ -26,7 +26,7 @@ namespace Robotusers\Chunk\Model\Behavior;
 
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
-use Robotusers\Chunk\Model\ResultSet;
+use Robotusers\Chunk\ORM\ResultSet;
 
 class ChunkBehavior extends Behavior
 {

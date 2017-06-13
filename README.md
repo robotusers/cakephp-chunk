@@ -20,7 +20,7 @@ The plugin provides a custom `ResultSet` class which accepts `Cake\ORM\Query` in
 Example:
 ```php
 $query = $table->find();
-$results = new \Robotusers\Chunk\Model\ResultSet($query);
+$results = new \Robotusers\Chunk\ORM\ResultSet($query);
 
 foreach ($results as $result) {
     // do stuff
@@ -31,7 +31,7 @@ You can control how many elements are in one "chunk" (1000 by default):
 
 ```php
 $query = $table->find();
-$results = new \Robotusers\Chunk\Model\ResultSet($query, ['size' => 100]);
+$results = new \Robotusers\Chunk\ORM\ResultSet($query, ['size' => 100]);
 ```
 
 The plugin provides also a behavior with `chunk()` method:
