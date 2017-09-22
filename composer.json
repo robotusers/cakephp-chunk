@@ -3,6 +3,7 @@
 	"description": "Robotusers CakePHP Chunk plugin",
 	"homepage": "https://github.com/robotusers/cakephp-chunk",
 	"type": "cakephp-plugin",
+	"license": "MIT",
 	"require": {
 		"php": ">=5.6",
 		"cakephp/orm": "^3.4"
