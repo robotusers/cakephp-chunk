@@ -170,8 +170,9 @@ class ResultSet implements ResultSetInterface
     public function rewind()
     {
         $this->index = 0;
-        $this->chunkIndex = 0;
         $this->page = 1;
+        $this->chunkIndex = 0;
+        $this->chunkSize = 0;
     }
 
     /**
@@ -188,6 +189,10 @@ class ResultSet implements ResultSetInterface
         }
 
         if ($this->chunkSize && $this->chunkIndex >= $this->chunkSize) {
+            if ($this->chunkIndex < $this->getConfig('size')) {
+                return false;
+            }
+
             $this->page++;
             $this->fetchChunk();
         }
