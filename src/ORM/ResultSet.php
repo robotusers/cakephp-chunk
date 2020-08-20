@@ -225,7 +225,7 @@ class ResultSet implements ResultSetInterface
         $offset = ($this->page - 1) * $size;
 
         $query = clone $this->query;
-        $query->bufferResults(true)
+        $query->enableBufferedResults()
             ->offset($this->offset + $offset)
             ->limit($limit);
 
