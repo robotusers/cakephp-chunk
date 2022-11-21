@@ -37,7 +37,7 @@ use Robotusers\Chunk\ORM\ResultSet;
 class ChunkBehaviorTest extends TestCase
 {
     public $fixtures = [
-        'core.authors'
+        'core.Authors'
     ];
 
     public function testChunk()

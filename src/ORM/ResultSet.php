@@ -142,6 +142,7 @@ class ResultSet implements ResultSetInterface
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->current;
@@ -150,6 +151,7 @@ class ResultSet implements ResultSetInterface
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->index;
@@ -158,7 +160,7 @@ class ResultSet implements ResultSetInterface
     /**
      * {@inheritDoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
         $this->chunkIndex++;
@@ -167,7 +169,7 @@ class ResultSet implements ResultSetInterface
     /**
      * {@inheritDoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
         $this->page = 1;
@@ -178,7 +180,7 @@ class ResultSet implements ResultSetInterface
     /**
      * {@inheritDoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         if ($this->limit && $this->index >= $this->limit) {
             return false;
@@ -237,7 +239,7 @@ class ResultSet implements ResultSetInterface
     /**
      * {@inheritDoc}
      */
-    public function count()
+    public function count(): int
     {
         throw new RuntimeException('Count is not supported yet.');
     }
