@@ -30,6 +30,7 @@ use Cake\Collection\CollectionTrait;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Datasource\ResultSetInterface;
 use Cake\ORM\Query\SelectQuery;
+use ReturnTypeWillChange;
 use RuntimeException;
 
 class ResultSet implements ResultSetInterface
@@ -144,7 +145,7 @@ class ResultSet implements ResultSetInterface
     /**
      * @inheritDoc
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function current(): mixed
     {
         return $this->current;
@@ -153,7 +154,7 @@ class ResultSet implements ResultSetInterface
     /**
      * @inheritDoc
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function key(): mixed
     {
         return $this->index;

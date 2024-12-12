@@ -27,7 +27,6 @@ declare(strict_types=1);
 
 namespace Robotusers\Chunk\Test\TestCase\Model;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Robotusers\Chunk\ORM\ResultSet;
 use RuntimeException;
