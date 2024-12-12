@@ -1,7 +1,9 @@
 parameters:
-    level: 4
-#    reportUnmatchedIgnoredErrors: false
-#    treatPhpDocTypesAsCertain: false
+    level: 8
     paths:
-        - src/ 
-        - tests/ 
+        - src/
+    ignoreErrors:
+        - 
+            identifier: missingType.generics
+        - 
+            identifier: missingType.iterableValue

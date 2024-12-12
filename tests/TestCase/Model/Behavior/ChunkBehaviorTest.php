@@ -26,7 +26,6 @@ declare(strict_types=1);
  */
 namespace Robotusers\Chunk\Test\TestCase\Model\Behavior;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Robotusers\Chunk\Model\Behavior\ChunkBehavior;
 use Robotusers\Chunk\ORM\ResultSet;
@@ -38,13 +37,13 @@ use Robotusers\Chunk\ORM\ResultSet;
  */
 class ChunkBehaviorTest extends TestCase
 {
-    public $fixtures = [
+    public array $fixtures = [
         'core.Authors',
     ];
 
     public function testChunk()
     {
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
         $query = $table->find();
 
         $behavior = new ChunkBehavior($table);

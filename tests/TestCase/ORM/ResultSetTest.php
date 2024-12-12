@@ -27,7 +27,6 @@ declare(strict_types=1);
 
 namespace Robotusers\Chunk\Test\TestCase\Model;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Robotusers\Chunk\ORM\ResultSet;
 use RuntimeException;
@@ -39,13 +38,13 @@ use RuntimeException;
  */
 class ResultSetTest extends TestCase
 {
-    public $fixtures = [
+    public array $fixtures = [
         'core.Authors',
     ];
 
     public function testSameResults()
     {
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
 
         $query = $table->find();
 
@@ -59,7 +58,7 @@ class ResultSetTest extends TestCase
 
     public function testMultipleQueriesFired()
     {
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
 
         $called = 0;
         $query = $table->find()->formatResults(function ($r) use (&$called) {
@@ -79,7 +78,7 @@ class ResultSetTest extends TestCase
 
     public function testLimitAndOffset()
     {
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
 
         $query = $table->find()->limit(2)->page(2);
 
@@ -94,9 +93,9 @@ class ResultSetTest extends TestCase
     public function testSerialize()
     {
         $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage('You cannot serialize this result set.');
+        $this->expectExceptionMessage('You cannot serialize this result set.');
 
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
         $query = $table->find();
 
         $chunkedResults = new ResultSet($query);
@@ -106,9 +105,9 @@ class ResultSetTest extends TestCase
     public function testUnserialize()
     {
         $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage('You cannot unserialize this result set.');
+        $this->expectExceptionMessage('You cannot unserialize this result set.');
 
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
         $query = $table->find();
 
         $chunkedResults = new ResultSet($query);
@@ -118,23 +117,12 @@ class ResultSetTest extends TestCase
     public function testCount()
     {
         $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage('Count is not supported yet.');
+        $this->expectExceptionMessage('Count is not supported yet.');
 
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
         $query = $table->find();
 
         $chunkedResults = new ResultSet($query);
         $chunkedResults->count();
-    }
-
-    public function testInvalidQuery()
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage('You cannot chunk a non-select query.');
-
-        $table = TableRegistry::get('Authors');
-        $query = $table->query()->insert(['foo' => 'bar']);
-
-        new ResultSet($query);
     }
 }

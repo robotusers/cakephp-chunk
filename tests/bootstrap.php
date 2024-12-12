@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 use Cake\Core\BasePlugin;
 use Cake\Core\Plugin;
+use Cake\Datasource\ConnectionManager;
+use Cake\TestSuite\Fixture\SchemaLoader;
 
 error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
@@ -35,7 +37,10 @@ if (file_exists($root . '/config/bootstrap.php')) {
     require $root . '/config/bootstrap.php';
 }
 
-require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
+ConnectionManager::setConfig('test', ['url' => 'sqlite://tmp/test.sqlite']);
+
+$loader = new SchemaLoader();
+$loader->loadInternalFile($root . '/tests/schema.php');
 
 Plugin::getCollection()->add(new BasePlugin([
     'name' => 'Robotusers/Chunk',
