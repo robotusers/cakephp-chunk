@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*
  * The MIT License
  *
@@ -35,10 +37,10 @@ use RuntimeException;
  *
  * @author Robert Pustułka <r.pustulka@robotusers.com>
  */
-class ResultsSetTest extends TestCase
+class ResultSetTest extends TestCase
 {
     public $fixtures = [
-        'core.Authors'
+        'core.Authors',
     ];
 
     public function testSameResults()
@@ -49,7 +51,7 @@ class ResultsSetTest extends TestCase
 
         $standardResults = $query->all();
         $chunkedResults = new ResultSet($query, [
-            'size' => 1
+            'size' => 1,
         ]);
 
         $this->assertEquals($standardResults->toArray(), $chunkedResults->toArray());
@@ -67,7 +69,7 @@ class ResultsSetTest extends TestCase
         });
 
         $results = new ResultSet($query, [
-            'size' => 1
+            'size' => 1,
         ]);
 
         $results->toList();
@@ -83,7 +85,7 @@ class ResultsSetTest extends TestCase
 
         $standardResults = $query->all();
         $chunkedResults = new ResultSet($query, [
-            'size' => 1
+            'size' => 1,
         ]);
 
         $this->assertEquals($standardResults->toArray(), $chunkedResults->toArray());

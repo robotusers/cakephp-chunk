@@ -1,4 +1,16 @@
 <?xml version="1.0"?>
-<ruleset name="CakePHP Core">
- <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml"/>
+<ruleset name="Robotusers">
+    <rule ref="CakePHP">
+        <exclude name="CakePHP.Commenting.FunctionComment.Missing"/>
+        <exclude name="CakePHP.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="CakePHP.Commenting.FunctionComment.MissingParamTag"/>
+        <exclude name="CakePHP.NamingConventions.ValidTraitName"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>        
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+    <file>src/</file> 
+    <file>tests/</file> 
 </ruleset>

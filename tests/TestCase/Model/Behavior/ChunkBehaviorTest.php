@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*
  * The MIT License
  *
@@ -37,7 +39,7 @@ use Robotusers\Chunk\ORM\ResultSet;
 class ChunkBehaviorTest extends TestCase
 {
     public $fixtures = [
-        'core.Authors'
+        'core.Authors',
     ];
 
     public function testChunk()
@@ -47,7 +49,7 @@ class ChunkBehaviorTest extends TestCase
 
         $behavior = new ChunkBehavior($table);
         $chunk = $behavior->chunk($query, [
-            'size' => 100
+            'size' => 100,
         ]);
 
         $this->assertInstanceOf(ResultSet::class, $chunk);

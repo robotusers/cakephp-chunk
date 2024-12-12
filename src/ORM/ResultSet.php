@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*
  * The MIT License
  *
@@ -45,7 +47,7 @@ class ResultSet implements ResultSetInterface
     /**
      * Query instance.
      *
-     * @var Query
+     * @var \Cake\ORM\Query
      */
     protected $query;
 
@@ -113,15 +115,15 @@ class ResultSet implements ResultSetInterface
      * @var array
      */
     protected $_defaultConfig = [
-        'size' => 1000
+        'size' => 1000,
     ];
 
     /**
      * Constructor.
      *
-     * @param Query $query Query object.
+     * @param \Cake\ORM\Query $query Query object.
      * @param array $config Configuration.
-     * @throws RuntimeException When query is not supported.
+     * @throws \RuntimeException When query is not supported.
      */
     public function __construct(Query $query, array $config = [])
     {
@@ -140,7 +142,7 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     #[\ReturnTypeWillChange]
     public function current()
@@ -149,7 +151,7 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     #[\ReturnTypeWillChange]
     public function key()
@@ -158,7 +160,7 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function next(): void
     {
@@ -167,7 +169,7 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function rewind(): void
     {
@@ -178,7 +180,7 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function valid(): bool
     {
@@ -237,7 +239,7 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function count(): int
     {
@@ -245,9 +247,9 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * Serialization is not supported (yet).
-     *
      * {@inheritDoc}
+     *
+     * Serialization is not supported (yet).     *
      */
     public function serialize()
     {
@@ -255,9 +257,9 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * Serialization is not supported (yet).
-     *
      * {@inheritDoc}
+     *
+     * Serialization is not supported (yet).     *
      */
     public function unserialize($serialized)
     {
