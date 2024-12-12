@@ -38,13 +38,13 @@ use Robotusers\Chunk\ORM\ResultSet;
  */
 class ChunkBehaviorTest extends TestCase
 {
-    public $fixtures = [
+    public array $fixtures = [
         'core.Authors',
     ];
 
     public function testChunk()
     {
-        $table = TableRegistry::get('Authors');
+        $table = $this->getTableLocator()->get('Authors');
         $query = $table->find();
 
         $behavior = new ChunkBehavior($table);
