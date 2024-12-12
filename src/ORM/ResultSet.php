@@ -69,9 +69,9 @@ class ResultSet implements ResultSetInterface
     /**
      * Current chunk content.
      *
-     * @var iterable
+     * @var array<int, mixed>
      */
-    protected iterable $chunk;
+    protected array $chunk;
 
     /**
      * Current element index.
@@ -267,7 +267,7 @@ class ResultSet implements ResultSetInterface
      *
      * Serialization is not supported (yet).     *
      */
-    public function unserialize($serialized): never
+    public function unserialize(string $serialized): never
     {
         throw new RuntimeException('You cannot unserialize this result set.');
     }
