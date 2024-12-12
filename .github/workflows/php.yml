@@ -33,10 +33,10 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run CS
-      run: vendor/bin/phpcs -p --extensions=php ./src ./tests
+      run: vendor/bin/phpcs
 
     - name: Run stan
-      run: vendor/bin/phpstan analyse ./src --level 4
+      run: vendor/bin/phpstan analyse
 
     - name: Run tests
       run: vendor/bin/phpunit --coverage-clover=coverage.xml

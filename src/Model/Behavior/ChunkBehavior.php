@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*
  * The MIT License
  *
@@ -30,13 +32,12 @@ use Robotusers\Chunk\ORM\ResultSet;
 
 class ChunkBehavior extends Behavior
 {
-
     /**
      * Returns chunked result set.
      *
-     * @param Query $query Query instance.
+     * @param \Cake\ORM\Query $query Query instance.
      * @param array $config Config.
-     * @return ResultSet
+     * @return \Robotusers\Chunk\ORM\ResultSet
      */
     public function chunk(Query $query, array $config = [])
     {

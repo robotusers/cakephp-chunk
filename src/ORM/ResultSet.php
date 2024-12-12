@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*
  * The MIT License
  *
@@ -45,7 +47,7 @@ class ResultSet implements ResultSetInterface
     /**
      * Query instance.
      *
-     * @var Query
+     * @var \Cake\ORM\Query
      */
     protected $query;
 
@@ -113,15 +115,15 @@ class ResultSet implements ResultSetInterface
      * @var array
      */
     protected $_defaultConfig = [
-        'size' => 1000
+        'size' => 1000,
     ];
 
     /**
      * Constructor.
      *
-     * @param Query $query Query object.
+     * @param \Cake\ORM\Query $query Query object.
      * @param array $config Configuration.
-     * @throws RuntimeException When query is not supported.
+     * @throws \RuntimeException When query is not supported.
      */
     public function __construct(Query $query, array $config = [])
     {
@@ -140,34 +142,36 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->current;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->index;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function next()
+    public function next(): void
     {
         $this->index++;
         $this->chunkIndex++;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->index = 0;
         $this->page = 1;
@@ -176,9 +180,9 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function valid()
+    public function valid(): bool
     {
         if ($this->limit && $this->index >= $this->limit) {
             return false;
@@ -235,29 +239,39 @@ class ResultSet implements ResultSetInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function count()
+    public function count(): int
     {
         throw new RuntimeException('Count is not supported yet.');
     }
 
     /**
-     * Serialization is not supported (yet).
-     *
      * {@inheritDoc}
+     *
+     * Serialization is not supported (yet).     *
      */
     public function serialize()
     {
         throw new RuntimeException('You cannot serialize this result set.');
     }
 
+    public function __serialize(): array
+    {
+        throw new RuntimeException('You cannot serialize this result set.');
+    }
+
     /**
-     * Serialization is not supported (yet).
-     *
      * {@inheritDoc}
+     *
+     * Serialization is not supported (yet).     *
      */
     public function unserialize($serialized)
+    {
+        throw new RuntimeException('You cannot unserialize this result set.');
+    }
+
+    public function __unserialize(array $data): void
     {
         throw new RuntimeException('You cannot unserialize this result set.');
     }

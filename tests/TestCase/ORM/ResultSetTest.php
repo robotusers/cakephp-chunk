@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*
  * The MIT License
  *
@@ -28,16 +30,17 @@ namespace Robotusers\Chunk\Test\TestCase\Model;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Robotusers\Chunk\ORM\ResultSet;
+use RuntimeException;
 
 /**
  * Description of ResultsSetTest
  *
  * @author Robert Pustułka <r.pustulka@robotusers.com>
  */
-class ResultsSetTest extends TestCase
+class ResultSetTest extends TestCase
 {
     public $fixtures = [
-        'core.authors'
+        'core.Authors',
     ];
 
     public function testSameResults()
@@ -48,7 +51,7 @@ class ResultsSetTest extends TestCase
 
         $standardResults = $query->all();
         $chunkedResults = new ResultSet($query, [
-            'size' => 1
+            'size' => 1,
         ]);
 
         $this->assertEquals($standardResults->toArray(), $chunkedResults->toArray());
@@ -66,7 +69,7 @@ class ResultsSetTest extends TestCase
         });
 
         $results = new ResultSet($query, [
-            'size' => 1
+            'size' => 1,
         ]);
 
         $results->toList();
@@ -82,18 +85,17 @@ class ResultsSetTest extends TestCase
 
         $standardResults = $query->all();
         $chunkedResults = new ResultSet($query, [
-            'size' => 1
+            'size' => 1,
         ]);
 
         $this->assertEquals($standardResults->toArray(), $chunkedResults->toArray());
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage You cannot serialize this result set.
-     */
     public function testSerialize()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectErrorMessage('You cannot serialize this result set.');
+
         $table = TableRegistry::get('Authors');
         $query = $table->find();
 
@@ -101,12 +103,11 @@ class ResultsSetTest extends TestCase
         $chunkedResults->serialize();
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage You cannot unserialize this result set.
-     */
     public function testUnserialize()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectErrorMessage('You cannot unserialize this result set.');
+
         $table = TableRegistry::get('Authors');
         $query = $table->find();
 
@@ -114,12 +115,11 @@ class ResultsSetTest extends TestCase
         $chunkedResults->unserialize('');
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Count is not supported yet.
-     */
     public function testCount()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectErrorMessage('Count is not supported yet.');
+
         $table = TableRegistry::get('Authors');
         $query = $table->find();
 
@@ -127,12 +127,11 @@ class ResultsSetTest extends TestCase
         $chunkedResults->count();
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage You cannot chunk a non-select query.
-     */
     public function testInvalidQuery()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectErrorMessage('You cannot chunk a non-select query.');
+
         $table = TableRegistry::get('Authors');
         $query = $table->query()->insert(['foo' => 'bar']);
 

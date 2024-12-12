@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Test suite bootstrap.
  *
@@ -6,7 +8,11 @@
  * has been installed as a dependency of the plugin, or the plugin is itself
  * installed as a dependency of an application.
  */
+
+use Cake\Core\BasePlugin;
 use Cake\Core\Plugin;
+
+error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
 $findRoot = function ($root) {
     do {
@@ -17,7 +23,7 @@ $findRoot = function ($root) {
         }
     } while ($root !== $lastRoot);
 
-    throw new Exception("Cannot find the root of the application, unable to run tests");
+    throw new Exception('Cannot find the root of the application, unable to run tests');
 };
 $root = $findRoot(__FILE__);
 unset($findRoot);
@@ -31,6 +37,7 @@ if (file_exists($root . '/config/bootstrap.php')) {
 
 require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 
-Plugin::load('Robotusers/Chunk', [
-    'path' => PLUGIN_ROOT . DS
-]);
+Plugin::getCollection()->add(new BasePlugin([
+    'name' => 'Robotusers/Chunk',
+    'path' => PLUGIN_ROOT . DS,
+]));
