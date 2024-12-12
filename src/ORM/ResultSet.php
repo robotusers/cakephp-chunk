@@ -29,7 +29,7 @@ namespace Robotusers\Chunk\ORM;
 use Cake\Collection\CollectionTrait;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use RuntimeException;
 
 class ResultSet implements ResultSetInterface
@@ -42,70 +42,70 @@ class ResultSet implements ResultSetInterface
      *
      * @var mixed
      */
-    protected $current;
+    protected mixed $current;
 
     /**
      * Query instance.
      *
-     * @var \Cake\ORM\Query
+     * @var \Cake\ORM\Query\SelectQuery
      */
-    protected $query;
+    protected SelectQuery $query;
 
     /**
      * Current chunk size.
      *
      * @var int
      */
-    protected $chunkSize = 0;
+    protected int $chunkSize = 0;
 
     /**
      * Current chunk index.
      *
      * @var int
      */
-    protected $chunkIndex = 0;
+    protected int $chunkIndex = 0;
 
     /**
      * Current chunk content.
      *
-     * @var array
+     * @var iterable
      */
-    protected $chunk;
+    protected iterable $chunk;
 
     /**
      * Current element index.
      *
      * @var int
      */
-    protected $index = 0;
+    protected int $index = 0;
 
     /**
      * Current page.
      *
      * @var int
      */
-    protected $page = 0;
+    protected int $page = 0;
 
     /**
      * Original query offset.
      *
-     * @var int
+     * @var ?int
      */
-    protected $offset;
+    protected ?int $offset;
 
     /**
      * Original query limit.
      *
-     * @var int
+     * @var ?int
      */
-    protected $limit;
+    protected ?int $limit;
 
     /**
      * Total count.
      *
      * @var int
      */
-    protected $count;
+    protected int $count;
 
     /**
      * Default config.
@@ -114,18 +114,18 @@ class ResultSet implements ResultSetInterface
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'size' => 1000,
     ];
 
     /**
      * Constructor.
      *
-     * @param \Cake\ORM\Query $query Query object.
+     * @param \Cake\ORM\Query\SelectQuery $query Query object.
      * @param array $config Configuration.
      * @throws \RuntimeException When query is not supported.
      */
-    public function __construct(Query $query, array $config = [])
+    public function __construct(SelectQuery $query, array $config = [])
     {
         $type = $query->type();
         if ($type !== 'select') {
@@ -145,7 +145,7 @@ class ResultSet implements ResultSetInterface
      * @inheritDoc
      */
     #[\ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
         return $this->current;
     }
@@ -154,7 +154,7 @@ class ResultSet implements ResultSetInterface
      * @inheritDoc
      */
     #[\ReturnTypeWillChange]
-    public function key()
+    public function key(): mixed
     {
         return $this->index;
     }
@@ -215,7 +215,7 @@ class ResultSet implements ResultSetInterface
      *
      * @return void
      */
-    protected function fetchChunk()
+    protected function fetchChunk(): void
     {
         $size = $this->getConfig('size');
 
@@ -251,12 +251,12 @@ class ResultSet implements ResultSetInterface
      *
      * Serialization is not supported (yet).     *
      */
-    public function serialize()
+    public function serialize(): never
     {
         throw new RuntimeException('You cannot serialize this result set.');
     }
 
-    public function __serialize(): array
+    public function __serialize(): never
     {
         throw new RuntimeException('You cannot serialize this result set.');
     }
@@ -266,12 +266,12 @@ class ResultSet implements ResultSetInterface
      *
      * Serialization is not supported (yet).     *
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): never
     {
         throw new RuntimeException('You cannot unserialize this result set.');
     }
 
-    public function __unserialize(array $data): void
+    public function __unserialize(array $data): never
     {
         throw new RuntimeException('You cannot unserialize this result set.');
     }

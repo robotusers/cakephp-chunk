@@ -27,7 +27,7 @@ declare(strict_types=1);
 namespace Robotusers\Chunk\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Robotusers\Chunk\ORM\ResultSet;
 
 class ChunkBehavior extends Behavior
@@ -35,11 +35,11 @@ class ChunkBehavior extends Behavior
     /**
      * Returns chunked result set.
      *
-     * @param \Cake\ORM\Query $query Query instance.
+     * @param \Cake\ORM\Query\SelectQuery $query Query instance.
      * @param array $config Config.
      * @return \Robotusers\Chunk\ORM\ResultSet
      */
-    public function chunk(Query $query, array $config = [])
+    public function chunk(SelectQuery $query, array $config = []): ResultSet
     {
         return new ResultSet($query, $config);
     }
