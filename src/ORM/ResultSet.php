@@ -256,12 +256,22 @@ class ResultSet implements ResultSetInterface
         throw new RuntimeException('You cannot serialize this result set.');
     }
 
+    public function __serialize(): array
+    {
+        throw new RuntimeException('You cannot serialize this result set.');
+    }
+
     /**
      * {@inheritDoc}
      *
      * Serialization is not supported (yet).     *
      */
     public function unserialize($serialized)
+    {
+        throw new RuntimeException('You cannot unserialize this result set.');
+    }
+
+    public function __unserialize(array $data): void
     {
         throw new RuntimeException('You cannot unserialize this result set.');
     }
