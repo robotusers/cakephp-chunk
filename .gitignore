@@ -3,6 +3,6 @@
 /vendor
 /composer.lock
 /nbproject
-/phpunit.xml
 /coverage.xml
 .phpunit.*
+test.sqlite
